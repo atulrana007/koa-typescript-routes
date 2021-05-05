@@ -1,0 +1,12 @@
+<h1 class="container-title"><%- title %></h1>
+<ul class="container-list">
+  <% items.forEach(item=>{ %>
+  <li class="container-list-item"><%= item.value %></li>
+  <form method="post" action="/deleteItems/:<%= item.id %>?_method=delete">
+    <input type="submit" value="delete" />
+  </form>
+  <%})%>
+</ul>
+<ul class="style-ul">
+  <li><a class="nav-link" href="/addItems">Add Item</a></li>
+</ul>
