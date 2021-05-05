@@ -2,7 +2,7 @@
 <ul class="container-list">
   <% items.forEach(item=>{ %>
   <li class="container-list-item"><%= item.value %></li>
-  <form method="post" action="/deleteItems/:<%= item.id %>?_method=delete">
+  <form method="post" action="/deleteItem/:<%= item.id %>?_method=delete">
     <input type="submit" value="delete" />
   </form>
   <%})%>
