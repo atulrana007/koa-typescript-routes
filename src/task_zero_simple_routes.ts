@@ -20,7 +20,7 @@ router.get(
 router.get(
   "/hello",
   async (ctx: ParameterizedContext<DefaultState, DefaultContext>) => {
-    ctx.body = "world";
+    ctx.body = "<h1>world<h1>";
   }
 );
 router.get(
