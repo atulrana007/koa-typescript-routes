@@ -8,22 +8,18 @@ import "colors";
 import * as dotenv from "dotenv";
 import * as path from "path";
 import * as fs from "fs";
-// import * as methodOverride from "koa-methodoverride";
+
 dotenv.config({ path: __dirname + "/.env" });
 
 const port = process.env.PORT || 5000;
 const staticDir = path.join(__dirname + "/..", "public/css");
 console.log(staticDir);
 
-// const StyleCss: object = {
-//   style: fs.readFileSync(path.join(__dirname + "/..", "public/css/styles.css")),
-// };
-// console.log(StyleCss);
 const app: Koa<DefaultState, DefaultContext> = new Koa();
 const router: Router = new Router();
 
 app.use(bodyParser());
-// app.use(methodOverride("_method"));
+
 app.use(serve(staticDir));
 
 let items: Array<{ id: number; value: string }> = [
@@ -56,12 +52,6 @@ router.get(
     await ctx.render("add");
   }
 );
-// router.get(
-//   "/public/css/styles.css",
-//   async (ctx: ParameterizedContext<DefaultState, DefaultContext>) => {
-//     ctx.body = StyleCss;
-//   }
-// )
 
 const add = async (ctx: ParameterizedContext<DefaultState, DefaultContext>) => {
   const body: any = ctx.request.body;
