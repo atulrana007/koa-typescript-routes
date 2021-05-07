@@ -6,12 +6,7 @@ afterEach((done) => {
   done();
 });
 
-describe("Basic Routes test", () => {
-  test("get home route GET", async () => {
-    const response = await request(server).get("/");
-    expect(response.status).toEqual(200);
-    expect(response.body);
-  });
+describe("Auth Routes test", () => {
   test("should check auth route post", async () => {
     const response = await request(server)
       .post("/users")
@@ -19,13 +14,24 @@ describe("Basic Routes test", () => {
     expect(response.status).toEqual(200);
     expect(response.body[0].name).toEqual("Atul");
   });
-  test("should check auth route post", async () => {
+  test("should throw error if multiple users with same name are added", async () => {
     const response = await request(server)
       .post("/users")
       .send({ name: "Atul", password: "atul123" });
-    const responseUser = await request(server).get("/users");
+    const responseTwo = await request(server)
+      .post("/users")
+      .send({ name: "Atul", password: "deepu123" });
+    expect(response.status).toEqual(500);
+    expect(response.body.message).toEqual("user already exits");
+  });
+  test("should check auth route get", async () => {
+    const response = await request(server)
+      .post("/users")
+      .send({ name: "Deepu", password: "deepu123" });
     expect(response.status).toEqual(200);
-    expect(response.body[0].name).toEqual("Atul");
+    const responseGet = await request(server).get("/users");
+    expect(responseGet.status).toEqual(200);
+    expect(responseGet.body[0].name).toEqual("Atul");
   });
   test("should login user if valid name or password are added", async () => {
     const response = await request(server)
@@ -39,6 +45,7 @@ describe("Basic Routes test", () => {
     expect(responseLogin.status).toEqual(200);
     expect(responseLogin.body.text).toEqual("success");
   });
+
   test("should throw error if invalid name or password are added", async () => {
     const response = await request(server)
       .post("/users")
@@ -48,7 +55,7 @@ describe("Basic Routes test", () => {
     const responseLogin = await request(server)
       .post("/users/login")
       .send({ name: "Shaurya", password: "Ankit123" });
-    expect(responseLogin.status).toEqual(200);
-    expect(responseLogin.body.text).toEqual("invalid UserName or password");
+    expect(responseLogin.status).toEqual(500);
+    expect(responseLogin.body.message).toEqual("Invalid UserName of password");
   });
 });
