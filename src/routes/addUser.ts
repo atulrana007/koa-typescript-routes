@@ -10,7 +10,7 @@ const data = fs.readFileSync(
 const userData = JSON.parse(data.toString());
 
 const router: Router = new Router();
-const add = addUser(userData);
+const add = new addUser(userData);
 
 router.get(
   "/users",
@@ -18,6 +18,6 @@ router.get(
     ctx.body = userData;
   }
 );
-router.post("/users", add);
+router.post("/users", add.addUsers);
 
 export default router;

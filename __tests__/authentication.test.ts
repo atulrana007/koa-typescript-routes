@@ -1,13 +1,22 @@
 import * as request from "supertest";
 import server from "../src/authentication";
+import * as fs from "fs";
+import * as path from "path";
+
+// beforeEach(() => {});
 
 afterEach((done) => {
+  fs.writeFile(
+    path.join(__dirname, "../data-access/usersData.json"),
+    JSON.stringify([]),
+    () => {}
+  );
   server.close();
   done();
 });
 
 describe("Auth Routes test", () => {
-  test("should check auth route post", async () => {
+  test.only("should check auth route post", async () => {
     const response = await request(server)
       .post("/users")
       .send({ name: "Atul", password: "atul123" });
@@ -21,8 +30,8 @@ describe("Auth Routes test", () => {
     const responseTwo = await request(server)
       .post("/users")
       .send({ name: "Atul", password: "deepu123" });
-    expect(response.status).toEqual(500);
-    expect(response.body.message).toEqual("user already exits");
+    expect(responseTwo.status).toEqual(500);
+    expect(responseTwo.body.message).toEqual("user already exits");
   });
   test("should check auth route get", async () => {
     const response = await request(server)

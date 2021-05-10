@@ -10,8 +10,8 @@ const data = fs.readFileSync(
 const userData = JSON.parse(data.toString());
 
 const router: Router = new Router();
-const authRoutes = auth(userData);
+const authRoutes = new auth(userData);
 
-router.post("/users/login", authRoutes);
+router.post("/users/login", authRoutes.login);
 
 export default router;
