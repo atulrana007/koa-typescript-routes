@@ -1,10 +1,25 @@
 import * as request from "supertest";
+<<<<<<< HEAD
 import server from "../src/app";
 import * as fs from "fs";
 import * as path from "path";
 
 beforeAll(() => {
   console.log = () => {};
+=======
+import server from "../src/authentication";
+import * as fs from "fs";
+import * as path from "path";
+
+// beforeEach(() => {});
+
+afterEach((done) => {
+  fs.writeFile(
+    path.join(__dirname, "../data-access/usersData.json"),
+    JSON.stringify([]),
+    () => {}
+  );
+>>>>>>> 4567936... added class based routing
   server.close();
 });
 
@@ -16,7 +31,7 @@ afterAll((done) => {
 });
 
 describe("Auth Routes test", () => {
-  test("should check auth route post", async () => {
+  test.only("should check auth route post", async () => {
     const response = await request(server)
       .post("/users")
       .send({ name: "Atul", password: "atul123" });
