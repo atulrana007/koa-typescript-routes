@@ -34,7 +34,6 @@ class AuthRoutes {
     const checkUser = this.userData.findIndex((item) => {
       return item.name === ctx.request.body.name;
     });
-
     if (checkUser === -1) {
       ctx.status = 400;
       ctx.body = { message: "User not found" };

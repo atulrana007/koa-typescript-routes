@@ -31,7 +31,7 @@ afterAll((done) => {
 });
 
 describe("Auth Routes test", () => {
-  test.only("should check auth route post", async () => {
+  test("should check auth route post", async () => {
     const response = await request(server)
       .post("/users")
       .send({ name: "Atul", password: "atul123" });
