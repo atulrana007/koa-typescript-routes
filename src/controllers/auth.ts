@@ -6,7 +6,7 @@ import { nextTick } from "node:process";
 
 require("dotenv").config();
 
-class authRoutes {
+class AuthRoutes {
   userData: Array<{ name: string; password: string }>;
   constructor(user: Array<{ name: string; password: string }>) {
     this.userData = user;
@@ -19,15 +19,14 @@ class authRoutes {
     const authHeader = ctx.request.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     // ctx.body = ctx.request.headers;
-    console.log("accessToken", token);
     if (token === null) ctx.status = 401;
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
       if (err) {
         ctx.status = 403;
-        ctx.body = { name: ctx.request.body.name, auth: false };
+        ctx.body = { name: ctx.request.body.name, isLoggedIn: false };
       }
       // ctx.request.body = user;
-      ctx.request.body = { ...ctx.request.body, auth: true };
+      ctx.request.body = { ...ctx.request.body, isLoggedIn: true };
       console.log(user);
     });
     await next();
@@ -56,11 +55,11 @@ class authRoutes {
     if (passwordMatch) {
       // ctx.body = { text: "success" };
       console.log("user found with password", user);
-      ctx.body = { name: user.name, auth: true };
+      ctx.body = { name: user.name, isLoggedIn: true };
     } else {
       ctx.status = 500;
-      ctx.body = { message: "Invalid Username or password" };
+      ctx.body = { message: "Invalid Username or password", isLoggedIn: false };
     }
   };
 }
-export default authRoutes;
+export default AuthRoutes;

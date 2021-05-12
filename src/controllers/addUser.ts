@@ -4,7 +4,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as jwt from "jsonwebtoken";
 
-class addUser {
+class AddUser {
   userData: Array<{ name: string; password: string }>;
   constructor() {
     this.userData = [];
@@ -48,4 +48,4 @@ class addUser {
   };
 }
 
-export default addUser;
+export default AddUser;

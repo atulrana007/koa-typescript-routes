@@ -1,11 +1,11 @@
 import * as Router from "koa-router";
-import addUser from "../controllers/addUser";
+import AddUser from "../controllers/addUser";
 import * as fs from "fs";
 import * as path from "path";
 import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 
 const router: Router = new Router();
-const add = new addUser();
+const add = new AddUser();
 
 router.get(
   "/users",

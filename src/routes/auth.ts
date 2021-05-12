@@ -1,5 +1,5 @@
 import * as Router from "koa-router";
-import auth from "../controllers/auth";
+import AuthRoutes from "../controllers/auth";
 import * as fs from "fs";
 import * as path from "path";
 import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
@@ -7,9 +7,9 @@ import { addedUserData } from "./addUser";
 import { request } from "node:http";
 
 const router: Router = new Router();
-const authRoutes = new auth(addedUserData);
+const authRoutes = new AuthRoutes(addedUserData);
 
-router.post("/users/login", authRoutes.authenticateToken, authRoutes.login);
+router.post("/login", authRoutes.authenticateToken, authRoutes.login);
 
 router.post(
   "/auth",
