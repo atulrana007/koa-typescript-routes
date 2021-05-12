@@ -5,11 +5,7 @@ import * as path from "path";
 import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 
 const router: Router = new Router();
-<<<<<<< HEAD
 const add = new AddUser();
-=======
-const add = new addUser();
->>>>>>> d387ea0... authentication with webtokens
 
 router.get(
   "/users",

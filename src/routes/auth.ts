@@ -4,20 +4,11 @@ import * as fs from "fs";
 import * as path from "path";
 import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import { addedUserData } from "./addUser";
-<<<<<<< HEAD
 
 const router: Router = new Router();
 const authRoutes = new AuthRoutes(addedUserData);
 
 router.post("/login", authRoutes.authenticateToken, authRoutes.login);
-=======
-import { request } from "node:http";
-
-const router: Router = new Router();
-const authRoutes = new auth(addedUserData);
-
-router.post("/users/login", authRoutes.authenticateToken, authRoutes.login);
->>>>>>> d387ea0... authentication with webtokens
 
 router.post(
   "/auth",
