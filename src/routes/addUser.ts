@@ -4,20 +4,18 @@ import * as fs from "fs";
 import * as path from "path";
 import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 
-const data = fs.readFileSync(
-  path.join(__dirname, "../data-access/usersData.json")
-);
-const userData = JSON.parse(data.toString());
-
 const router: Router = new Router();
-const add = new addUser(userData);
+const add = new addUser();
 
 router.get(
   "/users",
   async (ctx: ParameterizedContext<DefaultState, DefaultContext>) => {
-    ctx.body = userData;
+    ctx.body = add.userData;
   }
 );
 router.post("/users", add.addUsers);
 
+const addedUserData: Array<{ name: string; password: string }> = add.userData;
+
 export default router;
+export { addedUserData };

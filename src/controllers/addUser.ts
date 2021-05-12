@@ -2,14 +2,21 @@ import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import * as bcrypt from "bcrypt";
 import * as fs from "fs";
 import * as path from "path";
+import * as jwt from "jsonwebtoken";
 
 class addUser {
   userData: Array<{ name: string; password: string }>;
-  constructor(user: Array<{ name: string; password: string }>) {
-    this.userData = user;
+  constructor() {
+    this.userData = [];
   }
+  generateAccessToken = (user: { name: string; password: string }) => {
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "5m",
+    });
+  };
   addUsers = async (
-    ctx: ParameterizedContext<DefaultState, DefaultContext>
+    ctx: ParameterizedContext<DefaultState, DefaultContext>,
+    next: any
   ) => {
     try {
       const checkUser =
@@ -18,8 +25,6 @@ class addUser {
           return item.name === ctx.request.body.name;
         });
 
-      console.log("checking index", checkUser);
-
       if (checkUser === -1) {
         const hashedPassword = await bcrypt.hash(ctx.request.body.password, 10);
         const user = {
@@ -27,12 +32,9 @@ class addUser {
           password: hashedPassword,
         };
         this.userData.push(user);
-        fs.writeFile(
-          path.join(__dirname, "../data-access/usersData.json"),
-          JSON.stringify(this.userData),
-          () => {}
-        );
-        ctx.body = this.userData;
+        const accessToken = this.generateAccessToken(user);
+        const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+        ctx.response.body = { auth: true, token: accessToken };
       } else {
         ctx.status = 500;
         ctx.body = { message: "user already exits" };
@@ -42,6 +44,7 @@ class addUser {
       ctx.status = 500;
       ctx.body = "Internal Server Error";
     }
+    next();
   };
 }
 

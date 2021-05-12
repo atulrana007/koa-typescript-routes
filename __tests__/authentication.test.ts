@@ -16,7 +16,7 @@ afterEach((done) => {
 });
 
 describe("Auth Routes test", () => {
-  test.only("should check auth route post", async () => {
+  test("should check auth route post", async () => {
     const response = await request(server)
       .post("/users")
       .send({ name: "Atul", password: "atul123" });
@@ -52,7 +52,6 @@ describe("Auth Routes test", () => {
       .post("/users/login")
       .send({ name: "Atul", password: "atul123" });
     expect(responseLogin.status).toEqual(200);
-    expect(responseLogin.body.text).toEqual("success");
   });
 
   test("should throw error if invalid name or password are added", async () => {

@@ -3,15 +3,19 @@ import auth from "../controllers/auth";
 import * as fs from "fs";
 import * as path from "path";
 import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
-
-const data = fs.readFileSync(
-  path.join(__dirname, "../data-access/usersData.json")
-);
-const userData = JSON.parse(data.toString());
+import { addedUserData } from "./addUser";
+import { request } from "node:http";
 
 const router: Router = new Router();
-const authRoutes = new auth(userData);
+const authRoutes = new auth(addedUserData);
 
-router.post("/users/login", authRoutes.login);
+router.post("/users/login", authRoutes.authenticateToken, authRoutes.login);
 
+router.post(
+  "/auth",
+  authRoutes.authenticateToken,
+  async (ctx: ParameterizedContext<DefaultState, DefaultContext>) => {
+    ctx.body = ctx.request.body ? ctx.request.body : "Access Token expired";
+  }
+);
 export default router;
