@@ -1,16 +1,18 @@
 import * as request from "supertest";
-import server from "../src/authentication";
+import server from "../src/app";
 import * as fs from "fs";
 import * as path from "path";
 
-// beforeEach(() => {});
+beforeAll(() => {
+  console.log = () => {};
+  server.close();
+});
+
+afterAll(() => {
+  server.close();
+});
 
 afterEach((done) => {
-  fs.writeFile(
-    path.join(__dirname, "../data-access/usersData.json"),
-    JSON.stringify([]),
-    () => {}
-  );
   server.close();
   done();
 });
@@ -21,7 +23,6 @@ describe("Auth Routes test", () => {
       .post("/users")
       .send({ name: "Atul", password: "atul123" });
     expect(response.status).toEqual(200);
-    expect(response.body[0].name).toEqual("Atul");
   });
   test("should throw error if multiple users with same name are added", async () => {
     const response = await request(server)
@@ -47,10 +48,13 @@ describe("Auth Routes test", () => {
       .post("/users")
       .send({ name: "Ankit", password: "Ankit123" });
     expect(response.status).toEqual(200);
+    const accessToken = response.body.token;
 
     const responseLogin = await request(server)
-      .post("/users/login")
-      .send({ name: "Atul", password: "atul123" });
+      .post("/login")
+      .set("authorization", `Bearer ${accessToken}`)
+      .send({ name: "Ankit", password: "Ankit123" });
+
     expect(responseLogin.status).toEqual(200);
   });
 
@@ -59,11 +63,13 @@ describe("Auth Routes test", () => {
       .post("/users")
       .send({ name: "Shaurya", password: "shaurya123" });
     expect(response.status).toEqual(200);
+    const accessToken = response.body.token;
 
     const responseLogin = await request(server)
-      .post("/users/login")
-      .send({ name: "Shaurya", password: "Ankit123" });
+      .post("/login")
+      .send({ name: "Shaurya", password: "Ankit123" })
+      .set("authorization", accessToken);
     expect(responseLogin.status).toEqual(500);
-    expect(responseLogin.body.message).toEqual("Invalid UserName of password");
+    expect(responseLogin.body.message).toEqual("Invalid Username or password");
   });
 });

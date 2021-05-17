@@ -1,4 +1,3 @@
-import * as Koa from "koa";
 import * as Router from "koa-router";
 import { DefaultContext, DefaultState, ParameterizedContext } from "koa";
 import "colors";
@@ -10,19 +9,12 @@ let items: Array<{ id: number; value: string }> = [
 ];
 
 router.get(
-  "/",
+  "/task1",
   async (ctx: ParameterizedContext<DefaultState, DefaultContext>) => {
-    await ctx.render("index", {
+    ctx.body = {
       title: "To Do List",
       items: items,
-    });
-  }
-);
-
-router.get(
-  "/addItems",
-  async (ctx: ParameterizedContext<DefaultState, DefaultContext>) => {
-    await ctx.render("add");
+    };
   }
 );
 
@@ -32,22 +24,19 @@ const add = async (ctx: ParameterizedContext<DefaultState, DefaultContext>) => {
   const itemId: number = items.length;
   items.push({ id: itemId, value: item });
   ctx.response.body = "Added Successfully";
-  ctx.redirect("/");
 };
 
 router.post("/addItems", add);
 
-router.del(
-  "/deleteItem/id",
+router.post(
+  "/deleteItem/:id",
   async (ctx: ParameterizedContext<DefaultState, DefaultContext>) => {
     const deleteId: number = ctx.params.id;
     const index: number = items.findIndex((ele) => {
       return ele.id === deleteId;
     });
-    console.log("deleting Index", index);
     items = index !== -1 ? items.splice(index, 1) : items;
-    console.log(items);
-    ctx.redirect("/");
+    ctx.body = items;
   }
 );
 
@@ -62,7 +51,7 @@ router.put(
     });
     console.log("final_index", index);
     if (index !== -1) items[index].value = item;
-    ctx.redirect("/");
+    ctx.redirect("/task1");
   }
 );
 
