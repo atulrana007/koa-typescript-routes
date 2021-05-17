@@ -5,15 +5,15 @@ import "colors";
 const router: Router = new Router();
 
 router.get(
-  "/",
+  "/task0",
   async (ctx: ParameterizedContext<DefaultState, DefaultContext>) => {
-    ctx.body = { msg: "Task 1" };
+    ctx.body = { msg: "Task 0" };
   }
 );
 router.get(
   "/hello",
   async (ctx: ParameterizedContext<DefaultState, DefaultContext>) => {
-    ctx.body = "<h1>world<h1>";
+    ctx.body = { msg: "world" };
   }
 );
 router.get(

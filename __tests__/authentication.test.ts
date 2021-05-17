@@ -1,5 +1,6 @@
 import * as request from "supertest";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import server from "../src/app";
 import * as fs from "fs";
 import * as path from "path";
@@ -8,12 +9,23 @@ beforeAll(() => {
   console.log = () => {};
 =======
 import server from "../src/authentication";
+=======
+import server from "../src/app";
+>>>>>>> 38edc04... updated the test cases
 import * as fs from "fs";
 import * as path from "path";
 
-// beforeEach(() => {});
+beforeAll(() => {
+  console.log = () => {};
+  server.close();
+});
+
+afterAll(() => {
+  server.close();
+});
 
 afterEach((done) => {
+<<<<<<< HEAD
   fs.writeFile(
     path.join(__dirname, "../data-access/usersData.json"),
     JSON.stringify([]),
@@ -24,6 +36,8 @@ afterEach((done) => {
 });
 
 afterEach(() => {
+=======
+>>>>>>> 38edc04... updated the test cases
   server.close();
 });
 afterAll((done) => {
@@ -35,7 +49,11 @@ describe("Auth Routes test", () => {
     const response = await request(server)
       .post("/users")
       .send({ name: "Atul", password: "atul123" });
+<<<<<<< HEAD
     // expect(response.status).toEqual(200);
+=======
+    expect(response.status).toEqual(200);
+>>>>>>> 38edc04... updated the test cases
   });
   test("should throw error if multiple users with same name are added", async () => {
     const response = await request(server)
