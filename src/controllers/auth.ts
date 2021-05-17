@@ -2,7 +2,6 @@ import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import * as bcrypt from "bcrypt";
 import * as mongoose from "mongoose";
 import * as jwt from "jsonwebtoken";
-import { nextTick } from "node:process";
 
 require("dotenv").config();
 
@@ -35,13 +34,12 @@ class AuthRoutes {
     const checkUser = this.userData.findIndex((item) => {
       return item.name === ctx.request.body.name;
     });
-    console.log("afterAuthenticate", ctx.request.body);
+
     if (checkUser === -1) {
       ctx.status = 400;
       ctx.body = { message: "User not found" };
     }
     const user: { name: string; password: string } = this.userData[checkUser];
-    console.log(typeof user.password, "match", ctx.request.body.password);
     let passwordMatch: boolean;
     try {
       passwordMatch = await bcrypt.compare(
@@ -53,8 +51,6 @@ class AuthRoutes {
     }
     console.log(passwordMatch);
     if (passwordMatch) {
-      // ctx.body = { text: "success" };
-      console.log("user found with password", user);
       ctx.body = { name: user.name, isLoggedIn: true };
     } else {
       ctx.status = 500;
