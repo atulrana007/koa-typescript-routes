@@ -8,6 +8,7 @@ import addUserRoutes from "./routes/addUser";
 import logoutRoutes from "./routes/logout";
 import taskOneRoutes from "./routes/task_one_todo";
 import taskZeroRoutes from "./routes/task_zero_simple_routes";
+import factorialRoutes from "./routes/factorial";
 
 dotenv.config({ path: __dirname + "/.env" });
 
@@ -24,9 +25,11 @@ app.use(authRoutes.routes()).use(authRoutes.allowedMethods());
 app.use(logoutRoutes.routes()).use(logoutRoutes.allowedMethods());
 app.use(taskOneRoutes.routes()).use(taskOneRoutes.allowedMethods());
 app.use(taskZeroRoutes.routes()).use(taskZeroRoutes.allowedMethods());
+app.use(factorialRoutes.routes()).use(factorialRoutes.allowedMethods());
 
 const server = app.listen(port).on("listening", () => {
   console.log(`Listening at Port ${port}...`);
 });
+// server.setTimeout(50000);
 
 export default server;
