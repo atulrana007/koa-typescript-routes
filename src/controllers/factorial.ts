@@ -1,28 +1,11 @@
 import IFactorial from "../interface/IFactorial";
 import IFactorialTechnique from "../interface/IFactorialTechnique";
 import IFactorialMiddleWare from "../interface/IMiddleWare";
+import { Response, errorResponse } from "../types/factorialTypes";
 import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import { performance } from "perf_hooks";
 
-type Response = {
-  data: {
-    factorial: {
-      value: number;
-      timeTaken: number; // time in millisecond
-    };
-  };
-};
-type errorResponse = {
-  error: {
-    reason: string;
-    dateTime: Date;
-    message: string;
-    details: {
-      [key: string]: any;
-    };
-  };
-};
-
+const MemoizedFactorialArray: Array<number> = [1];
 class LinearFactorial implements IFactorial {
   factorial = (num: number): number => {
     let ans: number = 1;
@@ -40,37 +23,29 @@ class RecursiveFactorial implements IFactorial {
   };
 }
 class MemoizedFactorial implements IFactorial {
-  private cache = {};
-  memoize = (fn: any) => {
-    return (...args: any[]) => {
-      let n = args[0];
-      if (n in this.cache) {
-        return this.cache[n];
-      } else {
-        let result = fn(n);
-        this.cache[n] = result;
-        return result;
-      }
-    };
-  };
-  _factorial = this.memoize((num: number) => {
-    if (num === 0) {
-      return 1;
-    } else {
-      return (num * this._factorial(num - 1)) % 1000000007;
+  _factorial(num: number) {
+    let result = MemoizedFactorialArray[MemoizedFactorialArray.length - 1];
+    for (let val = MemoizedFactorialArray.length; val <= num; val++) {
+      result = (result * val) % 1000000007;
+      MemoizedFactorialArray.push(result);
     }
-  });
-  factorial = (num: number): number => {
-    return this._factorial(num);
+  }
+  factorial = (num: number) => {
+    if (num <= MemoizedFactorialArray.length - 1) {
+      return MemoizedFactorialArray[num];
+    } else {
+      this._factorial(num);
+      return MemoizedFactorialArray[num];
+    }
   };
 }
 
 class FactorialGetter implements IFactorialTechnique {
-  constructor(private readonly fact: IFactorial) {}
+  constructor(private readonly factorialClassInstance: IFactorial) {}
 
   getFactorial(num: number): { value: number; time: number } {
     const start = performance.now();
-    const value: number = this.fact.factorial(num);
+    const value: number = this.factorialClassInstance.factorial(num);
     const end = performance.now();
     const diff = end - start;
     return { value: value, time: diff };
@@ -97,15 +72,29 @@ class FactorialMiddleWare implements IFactorialMiddleWare {
       } else {
         obj = new FactorialGetter(new LinearFactorial());
       }
-      const output = obj.getFactorial(num);
-      finalResponse = {
-        data: { factorial: { value: output.value, timeTaken: output.time } },
-      };
-      ctx.response.body = finalResponse;
+      try {
+        const output = obj.getFactorial(num);
+        finalResponse = {
+          data: { factorial: { value: output.value, timeTaken: output.time } },
+        };
+        ctx.response.body = finalResponse;
+      } catch (err) {
+        responseError = {
+          error: {
+            reason: err.name,
+            dateTime: new Date(),
+            message: err.message,
+            details: {
+              ["number"]: num,
+            },
+          },
+        };
+        ctx.response.body = responseError;
+      }
     } else {
       responseError = {
         error: {
-          reason: "InValid Input ",
+          reason: "Invalid Input",
           dateTime: new Date(),
           message: "Number should be in range 1 to 10^8",
           details: {
