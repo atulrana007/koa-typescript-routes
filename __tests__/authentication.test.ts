@@ -20,10 +20,6 @@ beforeAll(() => {
   server.close();
 });
 
-afterAll(() => {
-  server.close();
-});
-
 afterEach((done) => {
 <<<<<<< HEAD
   fs.writeFile(
