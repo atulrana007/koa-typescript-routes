@@ -11,8 +11,13 @@ function routerHandler(route: Function) {
     try {
       await next();
       const response = await route(ctx);
-      ctx.status = 200;
-      ctx.body = response;
+      if (ctx.path === "/error") {
+        ctx.status = 500;
+        ctx.throw(response);
+      } else {
+        ctx.status = 200;
+        ctx.body = response;
+      }
     } catch (err) {
       const response = await route(ctx);
       ctx.body = response;

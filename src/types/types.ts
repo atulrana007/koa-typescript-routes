@@ -1,4 +1,7 @@
-export type methods = "GET" | "POST";
+import { DefaultContext, DefaultState, ParameterizedContext } from "koa";
+
+export type KoaContext = ParameterizedContext<DefaultState, DefaultContext>;
+export type methods = "GET" | "POST" | "DELETE" | "PUT";
 export type Response = {
   data: {
     factorial: {
