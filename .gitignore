@@ -1,5 +1,7 @@
 
 node_modules
+coverage
+lcov-report
 src/**/*.js
 src/**/*.js.map
 
