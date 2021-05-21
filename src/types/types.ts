@@ -1,4 +1,5 @@
-type Response = {
+export type methods = "GET" | "POST";
+export type Response = {
   data: {
     factorial: {
       value: number;
@@ -6,14 +7,13 @@ type Response = {
     };
   };
 };
-type errorResponse = {
+export type errorResponse = {
   error: {
     reason: string;
     dateTime: Date;
     message: string;
-    details: {
+    details?: {
       [key: string]: any;
     };
   };
 };
-export { Response, errorResponse };

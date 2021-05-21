@@ -8,10 +8,6 @@ beforeAll(() => {
   server.close();
 });
 
-afterAll(() => {
-  server.close();
-});
-
 afterEach((done) => {
   server.close();
   done();
