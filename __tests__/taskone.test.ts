@@ -6,7 +6,10 @@ beforeAll(() => {
   server.close();
 });
 
-afterEach((done) => {
+afterEach(() => {
+  server.close();
+});
+afterAll((done) => {
   server.close();
   done();
 });

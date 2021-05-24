@@ -40,7 +40,6 @@ class AddUser {
         ctx.body = { message: "user already exits" };
       }
     } catch {
-      console.log("Directed to catch");
       ctx.status = 500;
       ctx.body = "Internal Server Error";
     }
