@@ -1,7 +1,7 @@
 import * as request from "supertest";
 import server from "../src/app";
 
-beforeAll(() => {
+beforeEach(() => {
   console.log = () => {};
   server.close();
 });
@@ -9,7 +9,6 @@ beforeAll(() => {
 afterEach(() => {
   server.close();
 });
-
 afterAll((done) => {
   done();
 });
@@ -38,7 +37,7 @@ describe("Auth Routes test", () => {
     expect(response.status).toEqual(200);
     const responseGet = await request(server).get("/users");
     expect(responseGet.status).toEqual(200);
-    expect(responseGet.body[0].name).toEqual("Atul");
+    expect(responseGet.body.data[0].name).toEqual("Atul");
   });
   test("should login user if valid name or password are added", async () => {
     const response = await request(server)

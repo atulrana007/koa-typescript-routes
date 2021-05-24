@@ -1,7 +1,7 @@
 import * as request from "supertest";
 import server from "../src/app";
 
-beforeAll(() => {
+beforeEach(() => {
   console.log = () => {};
   server.close();
 });
@@ -10,7 +10,6 @@ afterEach(() => {
   server.close();
 });
 afterAll((done) => {
-  server.close();
   done();
 });
 

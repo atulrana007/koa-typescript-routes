@@ -3,7 +3,7 @@ import AuthRoutes from "../controllers/auth";
 import * as fs from "fs";
 import * as path from "path";
 import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
-import { addedUserData } from "./addUser";
+import { addedUserData } from "../controllers/addUser";
 
 const router: Router = new Router();
 const authRoutes = new AuthRoutes(addedUserData);

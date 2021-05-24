@@ -25,7 +25,7 @@ class SimpleRoute {
     return ctx.query;
   }
   error() {
-    return { msg: "Internal server error" };
+    return { message: "Internal server error" };
   }
 }
 

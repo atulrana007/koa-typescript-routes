@@ -3,7 +3,7 @@ import server from "../src/app";
 import * as fs from "fs";
 import * as path from "path";
 
-beforeAll(() => {
+beforeEach(() => {
   console.log = () => {};
   server.close();
 });
@@ -11,7 +11,6 @@ afterEach(() => {
   server.close();
 });
 afterAll((done) => {
-  server.close();
   done();
 });
 

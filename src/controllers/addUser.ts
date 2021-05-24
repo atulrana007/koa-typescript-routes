@@ -3,9 +3,18 @@ import * as bcrypt from "bcrypt";
 import * as fs from "fs";
 import * as path from "path";
 import * as jwt from "jsonwebtoken";
+import { KoaContext, methods } from "../types/types";
 
 class AddUser {
-  userData: Array<{ name: string; password: string }>;
+  public static instance: AddUser | undefined = undefined;
+
+  public static getInstance() {
+    if (this.instance !== undefined) return this.instance;
+    this.instance = new AddUser();
+    return this.instance;
+  }
+
+  public userData: Array<{ name: string; password: string }>;
   constructor() {
     this.userData = [];
   }
@@ -24,7 +33,6 @@ class AddUser {
         this.userData.findIndex((item) => {
           return item.name === ctx.request.body.name;
         });
-
       if (checkUser === -1) {
         const hashedPassword = await bcrypt.hash(ctx.request.body.password, 10);
         const user = {
@@ -34,17 +42,35 @@ class AddUser {
         this.userData.push(user);
         const accessToken = this.generateAccessToken(user);
         const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
-        ctx.response.body = { auth: true, token: accessToken };
+        return { auth: true, token: accessToken, status: 200 };
       } else {
-        ctx.status = 500;
-        ctx.body = { message: "user already exits" };
+        return { message: "user already exits", status: 500 };
       }
     } catch {
-      ctx.status = 500;
-      ctx.body = "Internal Server Error";
+      return { message: "Internal Server Error", status: 500 };
     }
-    next();
   };
 }
 
-export default AddUser;
+const addUserRoutes = AddUser.getInstance();
+
+const routes: { url: string; methods: methods[]; route: Function }[] = [
+  {
+    url: "/users",
+    methods: ["GET"],
+    route: (ctx: KoaContext) => {
+      return { data: addUserRoutes.userData, status: 200 };
+    },
+  },
+  {
+    url: "/users",
+    methods: ["POST"],
+    route: addUserRoutes.addUsers,
+  },
+];
+
+const addedUserData: Array<{ name: string; password: string }> =
+  addUserRoutes.userData;
+
+export default routes;
+export { addedUserData };
