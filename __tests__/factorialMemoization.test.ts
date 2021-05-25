@@ -6,8 +6,11 @@ beforeAll(() => {
   server.close();
 });
 
-afterAll(() => {
+afterEach(() => {
   server.close();
+});
+afterAll((done) => {
+  done();
 });
 
 describe("Testing Factorial routes for Memoization Technique", () => {
