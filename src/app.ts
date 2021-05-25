@@ -2,7 +2,7 @@ import * as Koa from "koa";
 import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import * as bodyParser from "koa-bodyparser";
 import * as dotenv from "dotenv";
-import FinalRouter from "./routes/index";
+import FinalRouter from "./routes/routesRegistry";
 import Authenticate from "./middleware/auth";
 
 dotenv.config({ path: __dirname + "/.env" });

@@ -1,6 +1,7 @@
 import { DefaultContext, DefaultState, ParameterizedContext } from "koa";
 
 export type KoaContext = ParameterizedContext<DefaultState, DefaultContext>;
+export type routesType = { url: string; methods: methods[]; route: Function }[];
 export type methods = "GET" | "POST" | "DELETE" | "PUT";
 export type Response = {
   data: {
