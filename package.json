@@ -56,7 +56,8 @@
       "<rootDir>/node_modules/"
     ],
     "roots": [
-      "<rootDir>/__tests__"
+      "<rootDir>/__tests__",
+      "<rootDir>/src/routes"
     ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"

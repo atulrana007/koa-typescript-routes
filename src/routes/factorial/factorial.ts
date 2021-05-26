@@ -1,11 +1,11 @@
-import IFactorial from "../interface/IFactorial";
-import IFactorialTechnique from "../interface/IFactorialTechnique";
-import IFactorialRoute from "../interface/IFactorialRoute";
-import { Response, errorResponse, methods } from "../types/types";
+import IFactorial from "../../interface/IFactorial";
+import IFactorialTechnique from "../../interface/IFactorialTechnique";
+import IFactorialRoute from "../../interface/IFactorialRoute";
+import { Response, errorResponse, methods } from "../../types/types";
 import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import { performance } from "perf_hooks";
 
-class RecursiveFactorial implements IFactorial {
+export class RecursiveFactorial implements IFactorial {
   public static instance: RecursiveFactorial | undefined = undefined;
 
   public static getInstance() {
@@ -18,7 +18,7 @@ class RecursiveFactorial implements IFactorial {
     return (num * this.factorial(num - 1)) % 1000000007;
   };
 }
-class MemoizedFactorial implements IFactorial {
+export class MemoizedFactorial implements IFactorial {
   public static instance: MemoizedFactorial | undefined = undefined;
 
   public static getInstance() {
@@ -46,7 +46,7 @@ class MemoizedFactorial implements IFactorial {
   };
 }
 
-class FactorialGetter implements IFactorialTechnique {
+export class FactorialGetter implements IFactorialTechnique {
   constructor(private readonly factorialClassInstance: IFactorial) {}
 
   getFactorial(num: number): { value: number; time: number } {
@@ -58,7 +58,7 @@ class FactorialGetter implements IFactorialTechnique {
   }
 }
 
-class FindFactorial implements IFactorialRoute {
+export class FindFactorial implements IFactorialRoute {
   private static instance: FindFactorial | undefined = undefined;
 
   public static getInstance(

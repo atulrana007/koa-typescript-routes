@@ -1,11 +1,8 @@
-import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import * as bcrypt from "bcrypt";
-import * as fs from "fs";
-import * as path from "path";
 import * as jwt from "jsonwebtoken";
-import { KoaContext, methods } from "../types/types";
+import { KoaContext, methods } from "../../types/types";
 
-class AddUser {
+export class AddUser {
   public static instance: AddUser | undefined = undefined;
 
   public static getInstance() {
@@ -23,10 +20,7 @@ class AddUser {
       expiresIn: "5m",
     });
   };
-  addUsers = async (
-    ctx: ParameterizedContext<DefaultState, DefaultContext>,
-    next: any
-  ) => {
+  addUsers = async (ctx: KoaContext, next: any) => {
     try {
       const checkUser =
         this.userData !== [] &&
@@ -40,14 +34,16 @@ class AddUser {
           password: hashedPassword,
         };
         this.userData.push(user);
+
         const accessToken = this.generateAccessToken(user);
         const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
-        return { auth: true, token: accessToken, status: 200 };
+        console.log("Something happened");
+        return Promise.resolve({ auth: true, token: accessToken, status: 200 });
       } else {
-        return { message: "user already exits", status: 500 };
+        return Promise.resolve({ message: "user already exits", status: 500 });
       }
     } catch {
-      return { message: "Internal Server Error", status: 500 };
+      return Promise.resolve({ message: "Internal Server Error", status: 500 });
     }
   };
 }
