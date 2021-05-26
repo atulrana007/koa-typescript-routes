@@ -4,7 +4,6 @@ import * as fs from "fs";
 import * as path from "path";
 import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import { addedUserData } from "./addUser";
-import { request } from "node:http";
 
 const router: Router = new Router();
 const authRoutes = new AuthRoutes(addedUserData);
