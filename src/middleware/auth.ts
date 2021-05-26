@@ -6,12 +6,12 @@ import { KoaContext } from "../types/types";
 
 require("dotenv").config();
 
-class AuthRoutes {
-  private static instance: AuthRoutes | undefined = undefined;
+export class Authentication {
+  private static instance: Authentication | undefined = undefined;
 
   public static getInstance(user: Array<{ name: string; password: string }>) {
     if (this.instance !== undefined) return this.instance;
-    this.instance = new AuthRoutes(user);
+    this.instance = new Authentication(user);
     return this.instance;
   }
 
@@ -88,6 +88,6 @@ class AuthRoutes {
   };
 }
 
-const authInstance = AuthRoutes.getInstance(addedUserData);
+const authInstance = Authentication.getInstance(addedUserData);
 
 export default authInstance;
