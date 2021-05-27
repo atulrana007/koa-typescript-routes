@@ -1,10 +1,8 @@
 import * as Router from "koa-router";
-import authRoutes from "./auth";
-import addUserRoutes from "./addUser";
-import logoutRoutes from "./logout";
-import taskOneRoutes from "../controllers/TodoApp";
-import taskZeroRoutes from "../controllers/simpleRoutes";
-import factorialRoutes from "../controllers/factorial";
+import addUserRoutes from "./addUsers/addUser";
+import taskOneRoutes from "./Todo/Todo";
+import taskZeroRoutes from "./simpleRoutes/simpleRoutes";
+import factorialRoutes from "./factorial/factorial";
 import { routeRegistry } from "./main";
 
 const finalRouter: Router = new Router();
@@ -12,16 +10,10 @@ const FinalRoutes: Array<any> = [
   taskZeroRoutes,
   taskOneRoutes,
   factorialRoutes,
+  addUserRoutes,
 ];
 FinalRoutes.map((item) => {
   routeRegistry(item, finalRouter);
 });
 
-const FinalRouter: Array<Router> = [
-  authRoutes,
-  addUserRoutes,
-  logoutRoutes,
-  finalRouter,
-];
-
-export default FinalRouter;
+export default finalRouter;

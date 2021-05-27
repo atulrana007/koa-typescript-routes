@@ -3,6 +3,7 @@ import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import * as bodyParser from "koa-bodyparser";
 import * as dotenv from "dotenv";
 import FinalRouter from "./routes/index";
+import Authenticate from "./middleware/auth";
 
 dotenv.config({ path: __dirname + "/.env" });
 
@@ -11,8 +12,10 @@ const port = process.env.PORT || 5000;
 const app: Koa<DefaultState, DefaultContext> = new Koa();
 
 app.use(bodyParser());
+app.use(Authenticate.login);
+app.use(Authenticate.logout);
 
-FinalRouter.map((item) => app.use(item.routes()).use(item.allowedMethods()));
+app.use(FinalRouter.routes()).use(FinalRouter.allowedMethods());
 
 const server = app.listen(port).on("listening", () => {
   console.log(`Listening at Port ${port}...`);

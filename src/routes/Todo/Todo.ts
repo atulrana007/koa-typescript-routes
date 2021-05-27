@@ -1,9 +1,9 @@
 import * as Router from "koa-router";
 import { DefaultContext, DefaultState, ParameterizedContext } from "koa";
 import "colors";
-import { KoaContext, methods } from "../types/types";
+import { KoaContext, methods } from "../../types/types";
 
-class ToDoApp {
+export class ToDoApp {
   public static instance: ToDoApp | undefined = undefined;
 
   public static getInstance() {
@@ -17,7 +17,7 @@ class ToDoApp {
   }
 
   home = async () => {
-    return { title: "To Do List", items: this.items };
+    return Promise.resolve({ title: "To Do List", items: this.items });
   };
   addItem = async (ctx: KoaContext) => {
     const body: any = ctx.request.body;

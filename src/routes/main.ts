@@ -11,12 +11,21 @@ function routerHandler(route: Function) {
     try {
       await next();
       const response = await route(ctx);
-      if (ctx.path === "/error") {
-        ctx.status = 500;
-        ctx.throw(response);
-      } else {
-        ctx.status = 200;
-        ctx.body = response;
+      switch (ctx.path) {
+        case "/error":
+          ctx.status = 500;
+          ctx.throw(response);
+
+        case "/users":
+          ctx.status = response.status;
+          if (ctx.status !== 200) {
+            ctx.throw(response);
+          }
+          ctx.body = response;
+
+        default:
+          ctx.status = 200;
+          ctx.body = response;
       }
     } catch (err) {
       const response = await route(ctx);

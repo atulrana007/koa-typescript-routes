@@ -1,9 +1,9 @@
 import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import * as Router from "koa-router";
-import { KoaContext, methods } from "../types/types";
+import { KoaContext, methods } from "../../types/types";
 import "colors";
 
-class SimpleRoute {
+export class SimpleRoute {
   public static instance: SimpleRoute | undefined = undefined;
 
   public static getInstance() {
@@ -25,7 +25,7 @@ class SimpleRoute {
     return ctx.query;
   }
   error() {
-    return { msg: "Internal server error" };
+    return { message: "Internal server error" };
   }
 }
 
