@@ -1,5 +1,4 @@
-import { AppContext } from "../../types";
-import { KoaContext } from "../../types/types";
+import { AppContext } from "../../interface/app";
 import { SimpleRoute } from "./simpleRoutes";
 
 describe("Testing SimpleRoute Class", () => {

@@ -1,4 +1,4 @@
-import { AppContext } from "../../types";
+import { AppContext } from "../../interface/app";
 import { ToDoApp } from "./Todo";
 
 describe("Testing ToDo Class", () => {

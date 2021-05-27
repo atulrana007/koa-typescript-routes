@@ -3,6 +3,7 @@ import server from "../src/app";
 
 beforeEach(() => {
   console.log = () => {};
+  console.error = () => {};
   server.close();
 });
 
