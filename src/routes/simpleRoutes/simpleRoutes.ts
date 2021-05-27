@@ -2,7 +2,7 @@ import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import * as Router from "koa-router";
 import { KoaContext, methods } from "../../types/types";
 import "colors";
-import { AppContext } from "../../types";
+import { AppContext } from "../../interface/app";
 
 export class SimpleRoute {
   public static instance: SimpleRoute | undefined = undefined;

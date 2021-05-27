@@ -1,8 +1,8 @@
-import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import * as bcrypt from "bcrypt";
 import { addedUserData } from "../routes/addUsers/addUser";
 import * as jwt from "jsonwebtoken";
 import { KoaContext } from "../types/types";
+import { AppMiddleWareContext } from "../interface/app";
 
 require("dotenv").config();
 
@@ -20,10 +20,7 @@ export class Authentication {
     this.userData = user;
   }
 
-  authenticateToken = async (
-    ctx: ParameterizedContext<DefaultState, DefaultContext>,
-    next: any
-  ) => {
+  authenticateToken = async (ctx: AppMiddleWareContext, next: any) => {
     const authHeader = ctx.request.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     if (token === null) ctx.status = 401;
@@ -68,11 +65,11 @@ export class Authentication {
       await next();
     }
   };
-  logout = async (ctx: KoaContext, next: any) => {
+  logout = async (ctx: AppMiddleWareContext, next: any) => {
     if (ctx.path === "/logout") {
       const authHeader = ctx.request.headers["authorization"];
       const token = authHeader && authHeader.split(" ")[1];
-      console.log("accessToken", token);
+
       if (token === null) ctx.status = 401;
       jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
         if (err) {
@@ -80,7 +77,6 @@ export class Authentication {
           ctx.body = { message: "Access Token Expired", auth: false };
         }
         ctx.body = { message: "Successfully Logged Out", auth: false };
-        console.log(user);
       });
     } else {
       await next();

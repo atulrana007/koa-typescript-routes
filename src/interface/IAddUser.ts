@@ -1,4 +1,4 @@
-import { AppContext } from "../types";
+import { AppContext } from "./app";
 import { Response } from "../types";
 import { addUserResponse, user } from "../types/responses/addUserResponse";
 

@@ -4,6 +4,14 @@ export type KoaContext = ParameterizedContext<DefaultState, DefaultContext>;
 export type routesType = { url: string; methods: methods[]; route: Function }[];
 export type methods = "GET" | "POST" | "DELETE" | "PUT";
 
+export enum LogLevel {
+  Debug = "debug",
+  Verbose = "notice",
+  Info = "info",
+  Warn = "warning",
+  Error = "error",
+}
+
 export type Response<T> = {
   message?: string;
   data?: T;

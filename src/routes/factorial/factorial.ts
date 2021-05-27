@@ -4,7 +4,7 @@ import IFactorialRoute from "../../interface/IFactorialRoute";
 import { Response, errorResponse, methods } from "../../types/types";
 import { factorialResponse } from "../../types";
 import { performance } from "perf_hooks";
-import { AppContext } from "../../types";
+import { AppContext } from "../../interface/app";
 
 export class RecursiveFactorial implements IFactorial {
   public static instance: RecursiveFactorial | undefined = undefined;

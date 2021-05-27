@@ -1,6 +1,6 @@
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
-import { AppContext } from "../../types";
+import { AppContext } from "../../interface/app";
 import { methods } from "../../types/types";
 import { addUserResponse, user } from "../../types/responses/addUserResponse";
 import { IAddUser } from "../../interface/IAddUser";
@@ -40,9 +40,9 @@ export class AddUser implements IAddUser {
 
         const accessToken = this.generateAccessToken(user);
         const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
-        console.log("Something happened");
         return Promise.resolve({
-          data: { auth: true, token: accessToken, status: 200 },
+          data: { auth: true, token: accessToken },
+          status: 200,
         });
       } else {
         return Promise.resolve({ message: "user already exits", status: 500 });

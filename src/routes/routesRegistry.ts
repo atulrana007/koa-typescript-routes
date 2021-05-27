@@ -5,7 +5,7 @@ import taskZeroRoutes from "./simpleRoutes/simpleRoutes";
 import factorialRoutes from "./factorial/factorial";
 import { userPostRoutes } from "./jsonPlaceHolder/jsonPlaceHolder";
 import { routeRegistry } from "./main";
-import { AppKoaRouterContext } from "../types";
+import { AppKoaRouterContext } from "../interface/app";
 
 const finalRouter: Router<AppKoaRouterContext> = new Router();
 const FinalRoutes: Array<any> = [

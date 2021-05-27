@@ -1,6 +1,6 @@
-import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import * as Router from "koa-router";
-import { AppContext, AppKoaRouterContext, Response } from "../types";
+import { Response } from "../types";
+import { AppContext, AppKoaRouterContext } from "../interface/app";
 import { createKoaRouterToAppContextTransform } from "../utils/KoaRouterToAppContext/KoaRouterToAppContext";
 
 type methods = "GET" | "POST";
@@ -13,7 +13,6 @@ function routerHandler<T>(route: Route<T>) {
       await next();
       const _ctx = createKoaRouterToAppContextTransform().transform(ctx);
       const response = await route(_ctx);
-      console.log("Response", response);
       switch (ctx.path) {
         case "/error":
           ctx.status = 500;
@@ -30,7 +29,9 @@ function routerHandler<T>(route: Route<T>) {
           ctx.status = 200;
           ctx.body = response;
       }
-    } catch (err) {}
+    } catch (err) {
+      ctx.throw(err);
+    }
   };
 }
 export default routerHandler;

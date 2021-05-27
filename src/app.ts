@@ -4,12 +4,13 @@ import * as bodyParser from "koa-bodyparser";
 import * as dotenv from "dotenv";
 import FinalRouter from "./routes/routesRegistry";
 import Authenticate from "./middleware/auth";
+import { AppContext, AppState } from "./interface/app";
 
 dotenv.config({ path: __dirname + "/.env" });
 
 const port = process.env.PORT || 5000;
 
-const app: Koa<DefaultState, DefaultContext> = new Koa();
+const app: Koa<AppState, AppContext> = new Koa<AppState, AppContext>();
 
 app.use(bodyParser());
 app.use(Authenticate.login);

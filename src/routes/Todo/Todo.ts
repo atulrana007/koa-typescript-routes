@@ -2,7 +2,7 @@ import * as Router from "koa-router";
 import { DefaultContext, DefaultState, ParameterizedContext } from "koa";
 import "colors";
 import { KoaContext, methods, Response } from "../../types/types";
-import { AppContext } from "../../types";
+import { AppContext } from "../../interface/app";
 import { ITodoApp } from "../../interface/IToDoApp";
 
 type ToDoResponse = {

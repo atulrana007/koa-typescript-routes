@@ -1,4 +1,5 @@
-import { AppContext, routesType } from "../../types";
+import { AppContext } from "../../interface/app";
+import { routesType } from "../../types";
 import { IHttpClient } from "../../types/httpClient";
 import { IUserPost } from "../../interface/IUserPosts";
 import { HttpClient } from "../../utils/httpClient/httpClient";

@@ -1,8 +1,10 @@
 import { ParameterizedContext } from "koa";
 import { IRouterContext } from "koa-router";
+
 export interface AppState {}
 
-export interface AppMiddleWareContext extends ParameterizedContext {}
+export interface AppMiddleWareContext
+  extends ParameterizedContext<AppState, AppContext> {}
 
 export interface AppContext {
   params: any;

@@ -1,4 +1,4 @@
-import { AppContext } from "../types";
+import { AppContext } from "../interface/app";
 import { Response, errorResponse } from "../types/types";
 import { factorialResponse } from "../types";
 
