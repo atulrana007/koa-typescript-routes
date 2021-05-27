@@ -17,16 +17,20 @@ export class HttpClient implements IHttpClient {
     );
     return resp;
   };
-  post = async <T>(url: string, data: any, config: {}): Promise<T> => {
-    const resp = await this.axios.post<any, T>(url, data, config);
+  post = async <T>(url: string, data: any, config: {}) => {
+    const resp = await this.axios.post<any, AxiosResponse<T>>(
+      url,
+      data,
+      config
+    );
     return resp;
   };
-  put = async <T>(url: string, data: any, config: {}): Promise<T> => {
-    const resp = await this.axios.put<any, T>(url, data, config);
+  put = async <T>(url: string, data: any, config: {}) => {
+    const resp = await this.axios.put<any, AxiosResponse<T>>(url, data, config);
     return resp;
   };
-  delete = async <T>(url: string, config: {}): Promise<T> => {
-    const resp = await this.axios.delete<any, T>(url, config);
+  delete = async <T>(url: string, config: {}) => {
+    const resp = await this.axios.delete<any, AxiosResponse<T>>(url, config);
     return resp;
   };
 }

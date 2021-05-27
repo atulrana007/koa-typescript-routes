@@ -1,9 +1,16 @@
 import * as Router from "koa-router";
 import { DefaultContext, DefaultState, ParameterizedContext } from "koa";
 import "colors";
-import { KoaContext, methods } from "../../types/types";
+import { KoaContext, methods, Response } from "../../types/types";
+import { AppContext } from "../../types";
+import { ITodoApp } from "../../interface/IToDoApp";
 
-export class ToDoApp {
+type ToDoResponse = {
+  title: string;
+  items: any;
+};
+
+export class ToDoApp implements ITodoApp {
   public static instance: ToDoApp | undefined = undefined;
 
   public static getInstance() {
@@ -17,34 +24,34 @@ export class ToDoApp {
   }
 
   home = async () => {
-    return Promise.resolve({ title: "To Do List", items: this.items });
+    return Promise.resolve({
+      data: { title: "To Do List", items: this.items },
+    });
   };
-  addItem = async (ctx: KoaContext) => {
-    const body: any = ctx.request.body;
+  addItem = async (ctx: AppContext): Promise<Response<ToDoResponse>> => {
+    const body: any = ctx.body;
     const item: string = body.item;
     const itemId: number = this.items.length;
     this.items.push({ id: itemId, value: item });
-    return Promise.resolve({ msg: "Added Successfully" });
+    return Promise.resolve({ message: "Added Successfully" });
   };
-  updateItem = async (ctx: KoaContext) => {
+  updateItem = async (ctx: AppContext) => {
     const updateId: number = ctx.params.id;
-    const body: any = ctx.request.body;
+    const body: any = ctx.body;
     const item: string = body.item;
     const index: number = this.items.findIndex((ele) => {
       return ele.id == updateId;
     });
     if (index !== -1) this.items[index].value = item;
-    return Promise.resolve({ msg: `updated the item with id ${updateId}` });
+    return Promise.resolve({ message: `updated the item with id ${updateId}` });
   };
-  deleteItem = async (
-    ctx: ParameterizedContext<DefaultState, DefaultContext>
-  ) => {
+  deleteItem = async (ctx: AppContext) => {
     const deleteId: number = ctx.params.id;
     const index: number = this.items.findIndex((ele) => {
       return ele.id === deleteId;
     });
     this.items = index !== -1 ? this.items.splice(index, 1) : this.items;
-    return Promise.resolve({ items: this.items });
+    return Promise.resolve({ data: { items: this.items } });
   };
 }
 

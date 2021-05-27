@@ -2,8 +2,9 @@ import IFactorial from "../../interface/IFactorial";
 import IFactorialTechnique from "../../interface/IFactorialTechnique";
 import IFactorialRoute from "../../interface/IFactorialRoute";
 import { Response, errorResponse, methods } from "../../types/types";
-import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
+import { factorialResponse } from "../../types";
 import { performance } from "perf_hooks";
+import { AppContext } from "../../types";
 
 export class RecursiveFactorial implements IFactorial {
   public static instance: RecursiveFactorial | undefined = undefined;
@@ -74,13 +75,11 @@ export class FindFactorial implements IFactorialRoute {
     private readonly fast: IFactorialTechnique
   ) {}
 
-  factorial = async (
-    ctx: ParameterizedContext<DefaultState, DefaultContext>
-  ) => {
+  factorial = async (ctx: AppContext) => {
     const num: number = ctx.params.number;
     const query: any = ctx.query?.query;
     let obj: any;
-    let finalResponse: Response;
+    let finalResponse: Response<factorialResponse>;
     let responseError: errorResponse;
 
     if (query !== "fast" && query !== "slow") {

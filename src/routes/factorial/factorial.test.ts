@@ -1,4 +1,5 @@
-import { KoaContext } from "../../types/types";
+import { AppContext } from "../../types";
+
 import {
   RecursiveFactorial,
   MemoizedFactorial,
@@ -45,21 +46,21 @@ describe("Testing FindFactorial Class", () => {
   test("should check if factorial methods returns correct answer", async () => {
     const request = { query: { query: "fast" }, params: { number: 5 } };
     const resp = await findFactorialInstance.factorial(
-      request as unknown as KoaContext
+      request as unknown as AppContext
     );
     expect(resp["data"].factorial?.value).toBe(120);
   });
   test("should throw error when query parameter not passed", async () => {
     const request = { params: { number: 5 } };
     const resp = await findFactorialInstance.factorial(
-      request as unknown as KoaContext
+      request as unknown as AppContext
     );
     expect(resp["error"]?.reason).toBe("Invalid Request");
   });
   test("should throw error when number not in range is passed as parameter", async () => {
     const request = { query: { query: "fast" }, params: { number: 0 } };
     const resp = await findFactorialInstance.factorial(
-      request as unknown as KoaContext
+      request as unknown as AppContext
     );
     expect(resp["error"]?.reason).toBe("Invalid Input");
   });

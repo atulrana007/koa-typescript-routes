@@ -1,6 +1,6 @@
+import { AppContext, routesType } from "../../types";
 import { IHttpClient } from "../../types/httpClient";
-import { KoaContext, routesType } from "../../types/types";
-import { IUserPost } from "../../types/userPosts";
+import { IUserPost } from "../../interface/IUserPosts";
 import { HttpClient } from "../../utils/httpClient/httpClient";
 
 export class UserPost implements IUserPost {
@@ -17,43 +17,43 @@ export class UserPost implements IUserPost {
       `https://jsonplaceholder.typicode.com/posts`,
       {}
     );
-    return Promise.resolve(resp);
+    return Promise.resolve(resp.data);
   };
-  getAllPostsByUserId = async (ctx: KoaContext) => {
+  getAllPostsByUserId = async (ctx: AppContext) => {
     const userId = ctx.params.userId;
     const resp = await this.httpClient.get<any>(
       `https://jsonplaceholder.typicode.com/users/${userId}/posts`,
       {}
     );
-    return Promise.resolve(resp);
+    return Promise.resolve(resp.data);
   };
-  addPost = async (ctx: KoaContext) => {
-    const body = ctx.request.body;
+  addPost = async (ctx: AppContext) => {
+    const body = ctx.body;
 
     const resp = await this.httpClient.post<any>(
       "https://jsonplaceholder.typicode.com/posts",
       body,
       {}
     );
-    return Promise.resolve(resp);
+    return Promise.resolve(resp.data);
   };
-  updatePost = async (ctx: KoaContext) => {
-    const body = ctx.request.body;
+  updatePost = async (ctx: AppContext) => {
+    const body = ctx.body;
     const postId = ctx.params.postId;
     const resp = await this.httpClient.put<any>(
       `https://jsonplaceholder.typicode.com/posts/${postId}`,
       body,
       {}
     );
-    return Promise.resolve(resp);
+    return Promise.resolve(resp.data);
   };
-  deletePost = async (ctx: KoaContext) => {
+  deletePost = async (ctx: AppContext) => {
     const postId = ctx.params.postId;
     const resp = await this.httpClient.delete<any>(
       `https://jsonplaceholder.typicode.com/posts/${postId}`,
       {}
     );
-    return Promise.resolve(resp);
+    return Promise.resolve(resp.data);
   };
 }
 

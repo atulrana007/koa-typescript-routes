@@ -1,6 +1,6 @@
 import { AppContext } from "../types/app";
 import { KoaContext, Response } from "../types/types";
-import { userPostResponse } from "../types/userPostResponse";
+import { userPostResponse } from "../types/responses/userPostResponse";
 
 export interface IUserPost {
   getAllPosts(): Promise<Response<userPostResponse>>;

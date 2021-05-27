@@ -20,16 +20,16 @@ describe("Testing Auth Routes", () => {
   //     .send({ name: "Atul", password: "atul123" });
   //   expect(response.status).toEqual(200);
   // });
-  test("should throw error if multiple users with same name are added", async () => {
-    const response = await request(server)
-      .post("/users")
-      .send({ name: "Atul", password: "atul123" });
-    const responseTwo = await request(server)
-      .post("/users")
-      .send({ name: "Atul", password: "deepu123" });
-    expect(responseTwo.status).toEqual(500);
-    expect(responseTwo.body.message).toEqual("user already exits");
-  });
+  // test("should throw error if multiple users with same name are added", async () => {
+  //   const response = await request(server)
+  //     .post("/users")
+  //     .send({ name: "Atul", password: "atul123" });
+  //   const responseTwo = await request(server)
+  //     .post("/users")
+  //     .send({ name: "Atul", password: "deepu123" });
+  //   expect(responseTwo.status).toEqual(500);
+  //   expect(responseTwo.body.message).toEqual("user already exits");
+  // });
   // test("should check auth route get", async () => {
   //   const response = await request(server)
   //     .post("/users")
@@ -45,22 +45,18 @@ describe("Testing Auth Routes", () => {
   //     .send({ name: "Ankit", password: "Ankit123" });
   //   expect(response.status).toEqual(200);
   //   const accessToken = response.body.token;
-
   //   const responseLogin = await request(server)
   //     .post("/login")
   //     .set("authorization", `Bearer ${accessToken}`)
   //     .send({ name: "Ankit", password: "Ankit123" });
-
   //   expect(responseLogin.status).toEqual(200);
   // });
-
   // test("should throw error if invalid name or password are added", async () => {
   //   const response = await request(server)
   //     .post("/users")
   //     .send({ name: "Shaurya", password: "shaurya123" });
   //   expect(response.status).toEqual(200);
   //   const accessToken = response.body.token;
-
   //   const responseLogin = await request(server)
   //     .post("/login")
   //     .send({ name: "Shaurya", password: "Ankit123" })
@@ -74,13 +70,11 @@ describe("Testing Auth Routes", () => {
   //     .send({ name: "Ritika", password: "Ritika123" });
   //   expect(response.status).toBe(200);
   //   const accessToken = response.body.token;
-
   //   const responseLogin = await request(server)
   //     .post("/login")
   //     .set("authorization", `Bearer ${accessToken}`)
   //     .send({ name: "Ritika", password: "Ritika123" });
   //   expect(responseLogin.status).toEqual(200);
-
   //   const responseLogout = await request(server)
   //     .get("/logout")
   //     .set("authorization", `Bearer ${accessToken}`);
@@ -121,7 +115,7 @@ describe("Task 1 to-do app routes test", () => {
   test("should check home route get", async () => {
     const response = await request(server).get("/task1");
     expect(response.status).toBe(200);
-    expect(response.body.title).toEqual("To Do List");
+    expect(response.body.data.title).toEqual("To Do List");
   });
   test("should check add item route post", async () => {
     const response = await request(server)
@@ -143,7 +137,7 @@ describe("Task 1 to-do app routes test", () => {
       .send({ item: "atul" });
     expect(response.status).toEqual(200);
     const responseUpdate = await request(server).put("/updateItem/1");
-    expect(response.status).toBe(200);
+    expect(responseUpdate.status).toBe(200);
   });
 });
 
@@ -151,12 +145,12 @@ describe("Task 0 simple routes test", () => {
   test("should check home route get", async () => {
     const response = await request(server).get("/task0");
     expect(response.status).toBe(200);
-    expect(response.body.msg).toEqual("Task 0");
+    expect(response.body.message).toEqual("Task 0");
   });
   test("should check hello route get", async () => {
     const response = await request(server).get("/hello");
     expect(response.status).toBe(200);
-    expect(response.body.msg).toBe("world");
+    expect(response.body.message).toBe("world");
   });
   test("should check echo route get", async () => {
     const response = await request(server).get("/echo?name=atul");

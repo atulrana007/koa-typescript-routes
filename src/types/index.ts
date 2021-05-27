@@ -1,4 +1,4 @@
 export * from "./app";
 export * from "./httpClient";
 export * from "./types";
-export * from "./factorialResponse";
+export * from "./responses/factorialResponse";

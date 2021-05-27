@@ -26,13 +26,21 @@ export class MockHttpClient implements IHttpClient {
   get = <T>(_url: string, _config: {}): Promise<AxiosResponse<T>> => {
     return Promise.resolve(this.response);
   };
-  post = <T>(_url: string, _data: any, _config: {}): Promise<T> => {
-    return Promise.resolve(this.response.data);
+  post = <T>(
+    _url: string,
+    _data: any,
+    _config: {}
+  ): Promise<AxiosResponse<T>> => {
+    return Promise.resolve(this.response);
   };
-  put = <T>(_url: string, _data: any, _config: {}): Promise<T> => {
-    return Promise.resolve(this.response.data);
+  put = <T>(
+    _url: string,
+    _data: any,
+    _config: {}
+  ): Promise<AxiosResponse<T>> => {
+    return Promise.resolve(this.response);
   };
-  delete = <T>(_url: string, _config: {}): Promise<T> => {
-    return Promise.resolve(this.response.data);
+  delete = <T>(_url: string, _config: {}): Promise<AxiosResponse<T>> => {
+    return Promise.resolve(this.response);
   };
 }

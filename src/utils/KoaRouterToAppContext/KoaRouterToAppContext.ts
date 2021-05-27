@@ -3,7 +3,7 @@ import {
   AppKoaRouterContext,
   RouterContextToAppContextTransformer,
   AppState,
-} from "../types";
+} from "../../types";
 
 export class KoaRouterContextToAppContext
   implements RouterContextToAppContextTransformer
