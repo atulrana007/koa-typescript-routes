@@ -22,15 +22,18 @@ function routerHandler<T>(route: Route<T>) {
           ctx.status = response.status;
           if (ctx.status !== 200) {
             ctx.throw(response);
+          } else {
+            ctx.body = response;
           }
-          ctx.body = response;
 
         default:
           ctx.status = 200;
           ctx.body = response;
       }
-    } catch (err) {
-      ctx.throw(err);
+    } catch (error) {
+      ctx.body = {
+        error,
+      };
     }
   };
 }

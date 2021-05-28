@@ -70,13 +70,18 @@ export class Authentication {
       const authHeader = ctx.request.headers["authorization"];
       const token = authHeader && authHeader.split(" ")[1];
 
+      console.log("I am token", token);
+      console.log("I am access secret token", process.env.ACCESS_TOKEN_SECRET);
+
       if (token === null) ctx.status = 401;
       jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
         if (err) {
+          console.log("err ------------>", err);
           ctx.status = 403;
           ctx.body = { message: "Access Token Expired", auth: false };
+        } else {
+          ctx.body = { message: "Successfully Logged Out", auth: false };
         }
-        ctx.body = { message: "Successfully Logged Out", auth: false };
       });
     } else {
       await next();
