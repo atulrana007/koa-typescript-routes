@@ -1,6 +1,10 @@
 import { AppContext } from "../../interface/app";
 import { ToDoApp } from "./Todo";
 
+beforeAll(() => {
+  console.log = () => {};
+});
+
 describe("Testing ToDo Class", () => {
   const todoInstance = new ToDoApp();
   test("should check home method works fine", async () => {

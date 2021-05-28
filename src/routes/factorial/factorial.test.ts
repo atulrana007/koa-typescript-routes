@@ -7,6 +7,10 @@ import {
   FindFactorial,
 } from "./factorial";
 
+beforeAll(() => {
+  console.log = () => {};
+});
+
 describe("Testing Recursive Factorial Class", () => {
   const recursiveInstance = new RecursiveFactorial();
   test("should check if factorial methods returns correct answer", () => {

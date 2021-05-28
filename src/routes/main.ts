@@ -9,9 +9,9 @@ type Route<T> = (ctx: AppContext) => Promise<Response<T>>;
 
 function routerHandler<T>(route: Route<T>) {
   return async (ctx: AppKoaRouterContext, next: () => Promise<any>) => {
+    const _ctx = createKoaRouterToAppContextTransform().transform(ctx);
     try {
       await next();
-      const _ctx = createKoaRouterToAppContextTransform().transform(ctx);
       const response = await route(_ctx);
       switch (ctx.path) {
         case "/error":
@@ -31,6 +31,7 @@ function routerHandler<T>(route: Route<T>) {
           ctx.body = response;
       }
     } catch (error) {
+      _ctx.logger(ctx, next);
       ctx.body = {
         error,
       };

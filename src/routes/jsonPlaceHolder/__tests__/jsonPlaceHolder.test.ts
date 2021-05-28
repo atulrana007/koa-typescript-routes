@@ -3,6 +3,10 @@ import { AppContext } from "../../../interface/app";
 import { MockHttpClient } from "../../../utils/httpClient/test-util/index";
 import { UserPost } from "../jsonPlaceHolder";
 
+beforeAll(() => {
+  console.log = () => {};
+});
+
 describe("User Post", () => {
   const mockHttpClient = new MockHttpClient();
   const userPostInstance = new UserPost(mockHttpClient);

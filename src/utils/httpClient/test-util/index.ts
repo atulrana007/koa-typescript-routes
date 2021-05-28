@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { IHttpClient } from "../../../types/httpClient";
+import { IHttpClient } from "../../../interface/IHttpClient";
 
 export class MockHttpClient implements IHttpClient {
   private response: AxiosResponse<any> = {

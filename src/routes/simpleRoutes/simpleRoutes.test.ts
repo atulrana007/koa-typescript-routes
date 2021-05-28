@@ -1,6 +1,10 @@
 import { AppContext } from "../../interface/app";
 import { SimpleRoute } from "./simpleRoutes";
 
+beforeAll(() => {
+  console.log = () => {};
+});
+
 describe("Testing SimpleRoute Class", () => {
   const simpleRoutesInstance = new SimpleRoute();
   test("should check if hello method works fine", () => {

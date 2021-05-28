@@ -1,4 +1,4 @@
-import { IHttpClient } from "../../types/httpClient";
+import { IHttpClient } from "../../interface/IHttpClient";
 import axios, { AxiosInstance, AxiosResponse } from "axios";
 
 export class HttpClient implements IHttpClient {

@@ -1,4 +1,5 @@
 import { RouterContext } from "koa-router";
+import Logger from "../../middleware/winston";
 import {
   AppKoaRouterContext,
   RouterContextToAppContextTransformer,
@@ -25,6 +26,7 @@ export class KoaRouterContextToAppContext
       headers: ctx.headers,
       state: ctx.state,
       status: ctx.status,
+      logger: Logger,
     };
     return resp;
   }

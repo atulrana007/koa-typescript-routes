@@ -1,7 +1,7 @@
-import { AppContext } from "../../interface/app";
+import { AppContext, IUserPost, IHttpClient } from "../../interface/index";
 import { routesType } from "../../types";
-import { IHttpClient } from "../../types/httpClient";
-import { IUserPost } from "../../interface/IUserPosts";
+import {} from "../../interface/IHttpClient";
+import {} from "../../interface/IUserPosts";
 import { HttpClient } from "../../utils/httpClient/httpClient";
 
 export class UserPost implements IUserPost {

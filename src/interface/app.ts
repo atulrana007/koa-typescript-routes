@@ -14,6 +14,8 @@ export interface AppContext {
     [key: string]: string | string[];
   };
   state: AppState;
+  status: number;
+  logger?: Function;
 }
 
 export interface AppKoaRouterContext extends IRouterContext {
