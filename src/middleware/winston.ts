@@ -35,13 +35,8 @@ export class WinstonLogger implements IWinstonLogger {
 
 export const createWinstonLogger = () => WinstonLogger.getInstance();
 
-const inBoundRequestLogger = async (
-  ctx: AppMiddleWareContext,
-  next: () => Promise<any>
-) => {
+const inBoundRequestLogger = async (ctx: AppMiddleWareContext) => {
   try {
-    await next();
-
     createWinstonLogger().log({
       level: Levels.Info,
       routeName: ctx.url,

@@ -31,7 +31,7 @@ function routerHandler<T>(route: Route<T>) {
           ctx.body = response;
       }
     } catch (error) {
-      _ctx.logger(ctx, next);
+      _ctx.logger(ctx);
       ctx.body = {
         error,
       };
