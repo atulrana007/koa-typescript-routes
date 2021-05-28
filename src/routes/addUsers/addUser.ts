@@ -20,7 +20,7 @@ export class AddUser implements IAddUser {
   }
   generateAccessToken = (user: user) => {
     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: "5m",
+      expiresIn: "30m",
     });
   };
   addUsers = async (ctx: AppContext, next: any) => {

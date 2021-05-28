@@ -13,13 +13,12 @@ afterEach(() => {
 afterAll((done) => {
   done();
 });
-
-describe("Testing Auth Routes", () => {
+describe("Testing Add User Routes", () => {
   test("should check auth route post", async () => {
     const response = await request(server)
       .post("/users")
       .send({ name: "Atul", password: "atul123" });
-    expect(response.status).toEqual(200);
+    expect(response.body.status).toEqual(200);
   });
   test("should throw error if multiple users with same name are added", async () => {
     const response = await request(server)
@@ -39,6 +38,9 @@ describe("Testing Auth Routes", () => {
     const responseGet = await request(server).get("/users");
     expect(responseGet.status).toEqual(200);
   });
+});
+
+describe("Testing Auth Routes", () => {
   test("should login user if valid name or password are added", async () => {
     const response = await request(server)
       .post("/users")
