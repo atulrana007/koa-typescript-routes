@@ -13,79 +13,79 @@ afterEach(() => {
 afterAll((done) => {
   done();
 });
-describe("Testing Add User Routes", () => {
-  test("should check auth route post", async () => {
-    const response = await request(server)
-      .post("/users")
-      .send({ name: "Atul", password: "atul123" });
-    expect(response.body.status).toEqual(200);
-  });
-  test("should throw error if multiple users with same name are added", async () => {
-    const response = await request(server)
-      .post("/users")
-      .send({ name: "Atul", password: "atul123" });
-    const responseTwo = await request(server)
-      .post("/users")
-      .send({ name: "Atul", password: "deepu123" });
-    expect(responseTwo.status).toEqual(500);
-    expect(responseTwo.body.error.message).toEqual("user already exits");
-  });
-  test("should check auth route get", async () => {
-    const response = await request(server)
-      .post("/users")
-      .send({ name: "Deepu", password: "deepu123" });
-    expect(response.status).toEqual(200);
-    const responseGet = await request(server).get("/users");
-    expect(responseGet.status).toEqual(200);
-  });
-});
+// describe("Testing Add User Routes", () => {
+//   test("should check auth route post", async () => {
+//     const response = await request(server)
+//       .post("/users")
+//       .send({ name: "Atul", password: "atul123" });
+//     expect(response.status).toEqual(200);
+//   });
+//   test("should throw error if multiple users with same name are added", async () => {
+//     const response = await request(server)
+//       .post("/users")
+//       .send({ name: "Atul", password: "atul123" });
+//     const responseTwo = await request(server)
+//       .post("/users")
+//       .send({ name: "Atul", password: "deepu123" });
+//     expect(responseTwo.status).toEqual(500);
+//     expect(responseTwo.body.error.message).toEqual("user already exits");
+//   });
+//   test("should check auth route get", async () => {
+//     const response = await request(server)
+//       .post("/users")
+//       .send({ name: "Deepu", password: "deepu123" });
+//     expect(response.status).toEqual(200);
+//     const responseGet = await request(server).get("/users");
+//     expect(responseGet.status).toEqual(200);
+//   });
+// });
 
-describe("Testing Auth Routes", () => {
-  test("should login user if valid name or password are added", async () => {
-    const response = await request(server)
-      .post("/users")
-      .send({ name: "Ankit", password: "Ankit123" });
-    expect(response.status).toEqual(200);
-    const accessToken = response.body.data.token;
-    const responseLogin = await request(server)
-      .post("/login")
-      .set("authorization", `Bearer ${accessToken}`)
-      .send({ name: "Ankit", password: "Ankit123" });
-    expect(responseLogin.status).toEqual(200);
-  });
-  test("should throw error if invalid name or password are added", async () => {
-    const response = await request(server)
-      .post("/users")
-      .send({ name: "Shaurya", password: "shaurya123" });
-    expect(response.status).toEqual(200);
-    const accessToken = response.body.data.token;
-    const responseLogin = await request(server)
-      .post("/login")
-      .send({ name: "Shaurya", password: "Ankit123" })
-      .set("authorization", accessToken);
-    expect(responseLogin.status).toEqual(500);
-    expect(responseLogin.body.message).toEqual("Invalid Username or password");
-  });
-  test("should check logout route get", async () => {
-    const response = await request(server)
-      .post("/users")
-      .send({ name: "Ritika", password: "Ritika123" });
-    expect(response.status).toBe(200);
+// describe("Testing Auth Routes", () => {
+//   test("should login user if valid name or password are added", async () => {
+//     const response = await request(server)
+//       .post("/users")
+//       .send({ name: "Ankit", password: "Ankit123" });
+//     expect(response.status).toEqual(200);
+//     const accessToken = response.body.data.token;
+//     const responseLogin = await request(server)
+//       .post("/login")
+//       .set("authorization", `Bearer ${accessToken}`)
+//       .send({ name: "Ankit", password: "Ankit123" });
+//     expect(responseLogin.status).toEqual(200);
+//   });
+//   test("should throw error if invalid name or password are added", async () => {
+//     const response = await request(server)
+//       .post("/users")
+//       .send({ name: "Shaurya", password: "shaurya123" });
+//     expect(response.status).toEqual(200);
+//     const accessToken = response.body.data.token;
+//     const responseLogin = await request(server)
+//       .post("/login")
+//       .send({ name: "Shaurya", password: "Ankit123" })
+//       .set("authorization", accessToken);
+//     expect(responseLogin.status).toEqual(500);
+//     expect(responseLogin.body.message).toEqual("Invalid Username or password");
+//   });
+//   test("should check logout route get", async () => {
+//     const response = await request(server)
+//       .post("/users")
+//       .send({ name: "Ritika", password: "Ritika123" });
+//     expect(response.status).toBe(200);
 
-    const accessToken = response.body.data.token;
-    const responseLogin = await request(server)
-      .post("/login")
-      .set("authorization", `Bearer ${accessToken}`)
-      .send({ name: "Ritika", password: "Ritika123" });
-    expect(responseLogin.status).toEqual(200);
+//     const accessToken = response.body.data.token;
+//     const responseLogin = await request(server)
+//       .post("/login")
+//       .set("authorization", `Bearer ${accessToken}`)
+//       .send({ name: "Ritika", password: "Ritika123" });
+//     expect(responseLogin.status).toEqual(200);
 
-    const responseLogout = await request(server)
-      .get("/logout")
-      .set("authorization", `Bearer ${accessToken}`);
-    console.log(responseLogout.body);
-    expect(responseLogout.status).toBe(200);
-  });
-});
+//     const responseLogout = await request(server)
+//       .get("/logout")
+//       .set("authorization", `Bearer ${accessToken}`);
+//     console.log(responseLogout.body);
+//     expect(responseLogout.status).toBe(200);
+//   });
+// });
 
 describe("Testing Factorial routes for Memoization Technique", () => {
   it("should check if the route return ok response when query parameter fast is passed", async () => {
