@@ -10,3 +10,4 @@ export * from "./IEncryption";
 export * from "./IAddUser";
 export * from "./IHttpClient";
 export * from "./app";
+export * from "./IServer";

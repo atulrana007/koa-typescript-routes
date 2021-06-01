@@ -70,7 +70,7 @@ const routes: { url: string; methods: methods[]; route: Function }[] = [
   },
   {
     url: "/deleteItem/:id",
-    methods: ["POST"],
+    methods: ["DELETE"],
     route: todoApp.deleteItem,
   },
   {

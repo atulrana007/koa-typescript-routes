@@ -3,6 +3,7 @@ import { routesType } from "../../types";
 import {} from "../../interface/IHttpClient";
 import {} from "../../interface/IUserPosts";
 import { HttpClient } from "../../utils/httpClient/httpClient";
+import { AxiosResponse } from "axios";
 
 export class UserPost implements IUserPost {
   private static instance: UserPost | undefined = undefined;
@@ -14,47 +15,66 @@ export class UserPost implements IUserPost {
   }
   constructor(private readonly httpClient: IHttpClient) {}
   getAllPosts = async () => {
-    const resp = await this.httpClient.get<any>(
-      `https://jsonplaceholder.typicode.com/posts`,
-      {}
-    );
-    return Promise.resolve(resp.data);
+    try {
+      const resp = (await this.httpClient.get<any>(
+        `https://jsonplaceholder.typicode.com/posts`,
+        {}
+      )) as AxiosResponse<any>;
+      return Promise.resolve(resp.data);
+    } catch (err) {
+      return err;
+    }
   };
   getAllPostsByUserId = async (ctx: AppContext) => {
     const userId = ctx.params.userId;
-    const resp = await this.httpClient.get<any>(
-      `https://jsonplaceholder.typicode.com/users/${userId}/posts`,
-      {}
-    );
-    return Promise.resolve(resp.data);
+    try {
+      const resp = (await this.httpClient.get<any>(
+        `https://jsonplaceholder.typicode.com/users/${userId}/posts`,
+        {}
+      )) as AxiosResponse<any>;
+      return Promise.resolve(resp.data);
+    } catch (err) {
+      return err;
+    }
   };
   addPost = async (ctx: AppContext) => {
     const body = ctx.body;
-
-    const resp = await this.httpClient.post<any>(
-      "https://jsonplaceholder.typicode.com/posts",
-      body,
-      {}
-    );
-    return Promise.resolve(resp.data);
+    try {
+      const resp = (await this.httpClient.post<any>(
+        "https://jsonplaceholder.typicode.com/posts",
+        body,
+        {}
+      )) as AxiosResponse<any>;
+      return Promise.resolve(resp.data);
+    } catch (err) {
+      return err;
+    }
   };
   updatePost = async (ctx: AppContext) => {
     const body = ctx.body;
     const postId = ctx.params.postId;
-    const resp = await this.httpClient.put<any>(
-      `https://jsonplaceholder.typicode.com/posts/${postId}`,
-      body,
-      {}
-    );
-    return Promise.resolve(resp.data);
+    try {
+      const resp = (await this.httpClient.put<any>(
+        `https://jsonplaceholder.typicode.com/posts/${postId}`,
+        body,
+        {}
+      )) as AxiosResponse<any>;
+      return Promise.resolve(resp.data);
+    } catch (err) {
+      return err;
+    }
   };
   deletePost = async (ctx: AppContext) => {
     const postId = ctx.params.postId;
-    const resp = await this.httpClient.delete<any>(
-      `https://jsonplaceholder.typicode.com/posts/${postId}`,
-      {}
-    );
-    return Promise.resolve(resp.data);
+    try {
+      const resp = (await this.httpClient.delete<any>(
+        `https://jsonplaceholder.typicode.com/posts/${postId}`,
+        {}
+      )) as AxiosResponse<any>;
+      return Promise.resolve(resp.data);
+    } catch (err) {
+      return err;
+    }
   };
 }
 

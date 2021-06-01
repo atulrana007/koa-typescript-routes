@@ -1,4 +1,4 @@
-import { AppContext } from "../types/app";
+import { AppContext } from "../interface/app";
 import { KoaContext, Response } from "../types/types";
 import { userPostResponse } from "../types/responses/userPostResponse";
 

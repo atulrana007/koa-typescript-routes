@@ -1,5 +1,5 @@
 import { Response } from "../types/types";
-import { AppContext } from "../types/app";
+import { AppContext } from "../interface/app";
 
 type ToDoResponse = {
   title?: string;
