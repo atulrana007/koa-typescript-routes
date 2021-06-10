@@ -1,16 +1,18 @@
-import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import * as Router from "koa-router";
+import { Response } from "../types";
+import { AppContext, AppKoaRouterContext } from "../interface/app";
+import { createKoaRouterToAppContextTransform } from "../utils/KoaRouterToAppContext/KoaRouterToAppContext";
 
 type methods = "GET" | "POST";
 
-function routerHandler(route: Function) {
-  return async (
-    ctx: ParameterizedContext<DefaultState, DefaultContext>,
-    next: () => Promise<any>
-  ) => {
+type Route<T> = (ctx: AppContext) => Promise<Response<T>>;
+
+function routerHandler<T>(route: Route<T>) {
+  return async (ctx: AppKoaRouterContext, next: () => Promise<any>) => {
+    const _ctx = createKoaRouterToAppContextTransform().transform(ctx);
     try {
       await next();
-      const response = await route(ctx);
+      const response = await route(_ctx);
       switch (ctx.path) {
         case "/error":
           ctx.status = 500;
@@ -20,22 +22,25 @@ function routerHandler(route: Function) {
           ctx.status = response.status;
           if (ctx.status !== 200) {
             ctx.throw(response);
+          } else {
+            ctx.body = response;
           }
-          ctx.body = response;
 
         default:
           ctx.status = 200;
           ctx.body = response;
       }
-    } catch (err) {
-      const response = await route(ctx);
-      ctx.body = response;
+    } catch (error) {
+      _ctx.logger(ctx);
+      ctx.body = {
+        error,
+      };
     }
   };
 }
 export default routerHandler;
 function routeRegistry(
-  routes: { url: string; methods: methods[]; route: Function }[],
+  routes: { url: string; methods: methods[]; route: Route<{}> }[],
   router: Router<any, {}>
 ) {
   for (let item of routes) {

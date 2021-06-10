@@ -1,19 +1,5 @@
-import * as Router from "koa-router";
-import addUserRoutes from "./addUsers/addUser";
-import taskOneRoutes from "./Todo/Todo";
-import taskZeroRoutes from "./simpleRoutes/simpleRoutes";
-import factorialRoutes from "./factorial/factorial";
-import { routeRegistry } from "./main";
-
-const finalRouter: Router = new Router();
-const FinalRoutes: Array<any> = [
-  taskZeroRoutes,
-  taskOneRoutes,
-  factorialRoutes,
-  addUserRoutes,
-];
-FinalRoutes.map((item) => {
-  routeRegistry(item, finalRouter);
-});
-
-export default finalRouter;
+export * from "./jsonPlaceHolder/jsonPlaceHolder";
+export * from "./factorial/factorial";
+export * from "./addUsers/addUser";
+export * from "./Todo/Todo";
+export * from "./simpleRoutes/simpleRoutes";

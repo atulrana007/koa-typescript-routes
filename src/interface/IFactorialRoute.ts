@@ -1,8 +1,10 @@
-import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
+import { AppContext } from "../interface/app";
 import { Response, errorResponse } from "../types/types";
+import { factorialResponse } from "../types";
+
 interface IFactorialRoute {
   factorial(
-    ctx: ParameterizedContext<DefaultState, DefaultContext>
-  ): Promise<Response | errorResponse>;
+    ctx: AppContext
+  ): Promise<Response<factorialResponse> | errorResponse>;
 }
 export default IFactorialRoute;

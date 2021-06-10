@@ -2,6 +2,7 @@ import { DefaultState, DefaultContext, ParameterizedContext } from "koa";
 import * as Router from "koa-router";
 import { KoaContext, methods } from "../../types/types";
 import "colors";
+import { AppContext } from "../../interface/app";
 
 export class SimpleRoute {
   public static instance: SimpleRoute | undefined = undefined;
@@ -14,14 +15,14 @@ export class SimpleRoute {
   constructor() {}
 
   home() {
-    return { msg: "Task 0" };
+    return { message: "Task 0" };
   }
   hello() {
     return {
-      msg: "world",
+      message: "world",
     };
   }
-  echo(ctx: KoaContext) {
+  echo(ctx: AppContext) {
     return ctx.query;
   }
   error() {
